@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_repoiseng" default="compile.module.repoiseng">
+  <dirname property="module.repoiseng.basedir" file="${ant.file.module_repoiseng}"/>
+  
+  <property name="module.jdk.home.repoiseng" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.repoiseng" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.repoiseng" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.repoiseng" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="repoiseng.output.dir" value="${module.repoiseng.basedir}/../out/production/RepoIseng"/>
+  <property name="repoiseng.testoutput.dir" value="${module.repoiseng.basedir}/../out/test/RepoIseng"/>
+  
+  <path id="repoiseng.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="repoiseng.module.production.classpath">
+    <path refid="${module.jdk.classpath.repoiseng}"/>
+  </path>
+  
+  <path id="repoiseng.runtime.production.module.classpath">
+    <pathelement location="${repoiseng.output.dir}"/>
+  </path>
+  
+  <path id="repoiseng.module.classpath">
+    <path refid="${module.jdk.classpath.repoiseng}"/>
+    <pathelement location="${repoiseng.output.dir}"/>
+  </path>
+  
+  <path id="repoiseng.runtime.module.classpath">
+    <pathelement location="${repoiseng.testoutput.dir}"/>
+    <pathelement location="${repoiseng.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.repoiseng">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.repoiseng">
+    <patternset refid="excluded.from.module.repoiseng"/>
+  </patternset>
+  
+  <path id="repoiseng.module.sourcepath">
+    <dirset dir="${module.repoiseng.basedir}/../../RepoIseng">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.repoiseng" depends="compile.module.repoiseng.production,compile.module.repoiseng.tests" description="Compile module RepoIseng"/>
+  
+  <target name="compile.module.repoiseng.production" depends="register.custom.compilers" description="Compile module RepoIseng; production classes">
+    <mkdir dir="${repoiseng.output.dir}"/>
+    <javac2 destdir="${repoiseng.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.repoiseng}/javac">
+      <compilerarg line="${compiler.args.repoiseng}"/>
+      <bootclasspath refid="repoiseng.module.bootclasspath"/>
+      <classpath refid="repoiseng.module.production.classpath"/>
+      <src refid="repoiseng.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.repoiseng"/>
+    </javac2>
+    
+    <copy todir="${repoiseng.output.dir}">
+      <fileset dir="${module.repoiseng.basedir}/../src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.repoiseng.tests" depends="register.custom.compilers,compile.module.repoiseng.production" description="compile module RepoIseng; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.repoiseng" description="cleanup module">
+    <delete dir="${repoiseng.output.dir}"/>
+    <delete dir="${repoiseng.testoutput.dir}"/>
+  </target>
+</project>
