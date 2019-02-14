@@ -1,5 +1,6 @@
 package repo;
 
+
 import java.util.Scanner;
 
 public class Suhu {
@@ -28,7 +29,7 @@ public class Suhu {
 			try
 			{
 			float hasil = cToR(scan.nextFloat());
-			System.out.println("Suhu dalam Reamur = " + Float.toString(hasil));
+			System.out.println("Suhu dalam Reamur = " + hasil);
 			} catch (Exception e)
 			{
 				System.out.println("input anda salah, silahkan ulangi dari awal ! ");
@@ -41,7 +42,7 @@ public class Suhu {
 			try
 			{
 			float hasil = cToF(scan.nextFloat());
-			System.out.println("Suhu dalam Fahrenheit = " + Float.toString(hasil));
+			System.out.println("Suhu dalam Fahrenheit = " + hasil);
 			} catch (Exception e)
 			{
 				System.out.println("input anda salah, silahkan ulangi dari awal ! ");
@@ -54,7 +55,7 @@ public class Suhu {
 			try
 			{
 			float hasil = cToK(scan.nextFloat());
-			System.out.println("Suhu dalam Kelvin = " + Float.toString(hasil));
+			System.out.println("Suhu dalam Kelvin = " + hasil);
 			} catch (Exception e)
 			{
 				System.out.println("input anda salah, silahkan ulangi dari awal ! ");
